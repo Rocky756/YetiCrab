@@ -36,6 +36,7 @@ export const TableUser = () => {
   
   return (
     <div>
+      {requests?.length ?
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -81,7 +82,9 @@ export const TableUser = () => {
           </tr>
           )}
         </tbody>
-</Table>
+      </Table>
+      : <h1>Ничего не найдено</h1>
+      }
       
     </div>
   );

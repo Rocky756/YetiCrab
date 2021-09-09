@@ -37,6 +37,7 @@ export const TableAdmin = () => {
   
   return (
     <div>
+      {requests?.length ?
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -87,7 +88,9 @@ export const TableAdmin = () => {
           </tr>
           )}
         </tbody>
-</Table>
+      </Table>
+      : <h1>Ничего не найдено</h1>
+      }
       
     </div>
   );

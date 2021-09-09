@@ -38,22 +38,68 @@ router.get('/getrequests/datenew', async (req, res) => {
   });
 
 // получить отсортированные по дате (старые) записи
-  router.get('/getrequests/dateold', async (req, res) => {
-    console.log('Зашел в getrequests');
-    let requests = await RequestModel.find().lean();
-    requests.sort((a, b) => b.datetime - a.datetime);
-    requests.forEach((req, index) => {
-      // const hours = `${req.datetime.getHours()}:`;
-      const hours = (req.datetime.getHours()) > 9 ? `${req.datetime.getHours()}:` : `0${req.datetime.getHours()}:`;
-      // const minutes = `${req.datetime.getMinutes()} `;
-      const minutes = (req.datetime.getMinutes()) > 9 ? `${req.datetime.getMinutes()}` : `0${req.datetime.getMinutes()}`;
-      const day = `${req.datetime.getDate()}.`;
-      const month = (req.datetime.getMonth()+1) > 9 ? `${req.datetime.getMonth()+1}` : `0${req.datetime.getMonth()+1}.`;
-      const year = `${req.datetime.getFullYear()}`;
-      req.datetime = day + month + year + ', время: ' + hours + minutes;
-    })
-    res.json({ requests });
-    });
+router.get('/getrequests/dateold', async (req, res) => {
+  console.log('Зашел в getrequests');
+  let requests = await RequestModel.find().lean();
+  requests.sort((a, b) => b.datetime - a.datetime);
+  requests.forEach((req, index) => {
+    const hours = (req.datetime.getHours()) > 9 ? `${req.datetime.getHours()}:` : `0${req.datetime.getHours()}:`;
+    const minutes = (req.datetime.getMinutes()) > 9 ? `${req.datetime.getMinutes()}` : `0${req.datetime.getMinutes()}`;
+    const day = `${req.datetime.getDate()}.`;
+    const month = (req.datetime.getMonth()+1) > 9 ? `${req.datetime.getMonth()+1}` : `0${req.datetime.getMonth()+1}.`;
+    const year = `${req.datetime.getFullYear()}`;
+    req.datetime = day + month + year + ', время: ' + hours + minutes;
+  })
+  res.json({ requests });
+  });
+
+// ручка поиска.
+router.post('/getrequests/search', async(req, res) => {
+  let { text } = req.body;
+  text = text.toLowerCase();
+  console.log(text);
+  let requests = await RequestModel.find().lean();
+  const validArr = [];
+  
+  // поиск по номеру заявки.
+  for (let i = 0; i < requests.length; i++) {
+    if (text == requests[i].reqnum) {
+      validArr.push(requests[i]);
+    }
+  }
+  // поиск по названию компании клиента.
+  for (let i = 0; i < requests.length; i++) {
+    if (text.length >= 3 && requests[i].company_name.toLowerCase().includes(text)) {
+        validArr.push(requests[i]);
+    }
+  }
+  // поиск по ФИО перевозчика.
+  for (let i = 0; i < requests.length; i++) {
+    if (text.length >= 3 && requests[i].carrier_name.toLowerCase().includes(text)) {
+        validArr.push(requests[i]);
+    }
+  }
+  // поиск по телефону.
+  for (let i = 0; i < requests.length; i++) {
+    if (text == requests[i].tel.toLowerCase()) {
+      validArr.push(requests[i]);
+    }
+  }
+  // поиск по комментарию.
+  for (let i = 0; i < requests.length; i++) {
+    if (text.length >= 3 && requests[i].comment.toLowerCase().includes(text)) {
+        validArr.push(requests[i]);
+    }
+  }
+  // поиск по ATI.
+  for (let i = 0; i < requests.length; i++) {
+    if (text == requests[i].ati.toLowerCase()) {
+      validArr.push(requests[i]);
+    }
+  }
+  res.json({ requests: validArr });
+})
+  
 
 router.post('/add', async(req, res) => {
   const { nameState: name, dateState, salaryState: salary } = req.body;

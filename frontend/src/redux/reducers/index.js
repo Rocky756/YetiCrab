@@ -1,4 +1,4 @@
-import { GET_REQUESTS, ADD_WORKER, DELETE_WORKER, SORT_DATE_NEW, SORT_DATE_OLD, SORT_NUM_NEW, SORT_NUM_OLD } from "../types";
+import { GET_REQUESTS, ADD_WORKER, DELETE_WORKER, SORT_DATE_NEW, SORT_DATE_OLD, SORT_NUM_NEW, SORT_NUM_OLD, SEARCH } from "../types";
 
 export const reducer = (state, action) => {
   let requests = [];
@@ -39,6 +39,11 @@ export const reducer = (state, action) => {
         ...state,
         requests: action.payload,
       };
+    case SEARCH:
+    return {
+      ...state,
+      requests: action.payload,
+    };
     
     default:
       return state;
