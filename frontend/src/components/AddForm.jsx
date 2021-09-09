@@ -12,7 +12,6 @@ export const AddForm = () => {
   const [atiState, setAtiState] = useState('');
 
   const submitHandler = async (event) => {
-    event.preventDefault();
     let action = addReqAC(clientState, carrierState, phoneState, commentState, atiState);
     dispatch(action);
     setClientState('');

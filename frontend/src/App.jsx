@@ -18,7 +18,7 @@ const App = () => {
     console.log('Зашел в UseEffect');
     const action = getRequestsAC();
     dispatch(action);
-  }, []);
+  }, [dispatch]);
 
   const searchHandler = () => {
     console.log(searchState);
@@ -50,7 +50,6 @@ const App = () => {
       < TableAdmin />
       :< TableUser />
       }
-      <h1>Привет</h1>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { GET_REQUESTS, ADD_REQ, DELETE_REQ, SORT_DATE_NEW, SORT_DATE_OLD, SORT_NUM_NEW, SORT_NUM_OLD, SEARCH } from "../types";
+import { GET_REQUESTS, ADD_REQ, DELETE_REQ, EDIT_REQ, SORT_DATE_NEW, SORT_DATE_OLD, SORT_NUM_NEW, SORT_NUM_OLD, SEARCH } from "../types";
 
 export const reducer = (state, action) => {
   let requests = [];
@@ -19,6 +19,11 @@ export const reducer = (state, action) => {
         ...state,
         requests,
       }
+    case EDIT_REQ:
+    return {
+      ...state, 
+      requests: action.payload,
+    }
     case SORT_NUM_OLD:
       requests = state.requests.sort((a, b) => b.reqnum - a.reqnum);
       return {
