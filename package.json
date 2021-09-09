@@ -1,0 +1,8 @@
+{
+  "name": "yeticrab",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Rocky756/YetiCrab.git",
+  "author": "Ruslan <ruslandegtyrev@gmail.com>",
+  "license": "MIT"
+}
