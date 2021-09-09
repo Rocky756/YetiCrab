@@ -1,4 +1,4 @@
-import { GET_REQUESTS, ADD_WORKER, DELETE_WORKER, SORT_DATE_NEW, SORT_DATE_OLD, SORT_NUM_NEW, SORT_NUM_OLD, SEARCH } from "../types";
+import { GET_REQUESTS, ADD_REQ, DELETE_REQ, SORT_DATE_NEW, SORT_DATE_OLD, SORT_NUM_NEW, SORT_NUM_OLD, SEARCH } from "../types";
 
 export const reducer = (state, action) => {
   let requests = [];
@@ -8,16 +8,16 @@ export const reducer = (state, action) => {
         ...state,
         requests: action.payload,
       };
-    case ADD_WORKER:
+    case ADD_REQ:
       return {
         ...state, 
-        workers: action.payload,
+        requests: action.payload,
       }
-    case DELETE_WORKER:
-      const workers = state.workers.filter((worker) => worker._id !== action.payload);
+    case DELETE_REQ:
+      requests = state.requests.filter((req) => req._id !== action.payload);
       return {
         ...state,
-        workers,
+        requests,
       }
     case SORT_NUM_OLD:
       requests = state.requests.sort((a, b) => b.reqnum - a.reqnum);

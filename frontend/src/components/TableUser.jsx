@@ -78,7 +78,7 @@ export const TableUser = () => {
               <td>{req.carrier_name}</td>
               <td>{req.tel}</td>
               <td>{req.comment}</td>
-              <td>{req.ati}</td>
+              <td><a href={`https://ati.su/firms/${req.ati}/info`}>{req.ati}</a></td>
           </tr>
           )}
         </tbody>

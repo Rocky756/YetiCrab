@@ -5,6 +5,8 @@ import { Table } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { SORT_NUM_OLD, SORT_NUM_NEW } from '../redux/types';
 import { sortDateNewAC, sortDateOldAC } from '../redux/actionCreators/sortAC';
+import { deleteReqAC } from '../redux/actionCreators/deleteWorkerAC copy';
+import { AddForm } from './AddForm';
 
 
 
@@ -31,6 +33,11 @@ export const TableAdmin = () => {
     const action = sortDateOldAC();
     dispatch(action);
     setDateSort((pre) => !pre)
+  }
+  const deleteHandler = async(_id) => {
+    console.log(_id);
+    const action = deleteReqAC(_id);
+    dispatch(action);
   }
   
   
@@ -80,10 +87,10 @@ export const TableAdmin = () => {
               <td>{req.carrier_name}</td>
               <td>{req.tel}</td>
               <td>{req.comment}</td>
-              <td>{req.ati}</td>
+              <td><a href={`https://ati.su/firms/${req.ati}/info`}>{req.ati}</a></td>
               <td>
                 <Button variant="secondary" className='btnTab'>Изменить</Button>
-                <Button variant="secondary" className='btnTab'>Удалить</Button>
+                <Button variant="secondary" className='btnTab' onClick={() => deleteHandler(req._id)}>Удалить</Button>
               </td>
           </tr>
           )}
@@ -91,6 +98,7 @@ export const TableAdmin = () => {
       </Table>
       : <h1>Ничего не найдено</h1>
       }
+    <AddForm />
       
     </div>
   );

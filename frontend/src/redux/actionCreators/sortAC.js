@@ -3,7 +3,7 @@ import { SORT_DATE_NEW, SORT_DATE_OLD } from "../types";
 
 export const sortDateNewFetchAC = async () => {
   console.log('Зашел в Fetch');
-  const response = await fetch("http://localhost:5000/tab/getrequests/datenew", {
+  const response = await fetch("http://localhost:5000/tab/sort/datenew", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export const sortDateNewAC = () => async (dispatch) => {
 
 export const sortDateOldFetchAC = async () => {
   console.log('Зашел в Fetch');
-  const response = await fetch("http://localhost:5000/tab/getrequests/dateold", {
+  const response = await fetch("http://localhost:5000/tab/sort/dateold", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

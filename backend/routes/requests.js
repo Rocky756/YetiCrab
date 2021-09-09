@@ -20,7 +20,7 @@ router.get('/getrequests', async (req, res) => {
   });
 
 // получить отсортированные по дате (новейшие) записи
-router.get('/getrequests/datenew', async (req, res) => {
+router.get('/sort/datenew', async (req, res) => {
   console.log('Зашел в getrequests');
   let requests = await RequestModel.find().lean();
   requests.sort((a, b) => a.datetime - b.datetime);
@@ -38,7 +38,7 @@ router.get('/getrequests/datenew', async (req, res) => {
   });
 
 // получить отсортированные по дате (старые) записи
-router.get('/getrequests/dateold', async (req, res) => {
+router.get('/sort/dateold', async (req, res) => {
   console.log('Зашел в getrequests');
   let requests = await RequestModel.find().lean();
   requests.sort((a, b) => b.datetime - a.datetime);
@@ -54,7 +54,7 @@ router.get('/getrequests/dateold', async (req, res) => {
   });
 
 // ручка поиска.
-router.post('/getrequests/search', async(req, res) => {
+router.post('/search', async(req, res) => {
   let { text } = req.body;
   text = text.toLowerCase();
   console.log(text);
@@ -102,28 +102,21 @@ router.post('/getrequests/search', async(req, res) => {
   
 
 router.post('/add', async(req, res) => {
-  const { nameState: name, dateState, salaryState: salary } = req.body;
-  const parts = dateState.split('-');
-  const dateBirth = new Date(parts[0], parts[1] - 1, parts[2]); 
-  const worker = await new workerModel({ name, dateBirth, salary });
-  await worker.save();
-  let workers = await workerModel.find().lean();
-  let taxValue = 0.13;
-  // console.log(allWorkers);
-  const currentTime = new Date(); // текущая дата
-  for (let i=0; i < workers.length; i++) {
-    workers[i].dateBirth = Math.floor((currentTime - workers[i].dateBirth) / 31536000000);
-    workers[i].tax = parseInt(workers[i].salary) * taxValue;
-    workers[i].salary = parseInt(workers[i].salary) + 'р';
-  }
-  // console.log(workers);
-  res.json({ workers });
+  const { clientState: company_name, carrierState: carrier_name, phoneState: tel, commentState: comment, atiState: ati } = req.body;
+  console.log(company_name, carrier_name, tel, comment, ati);
+  const datetime = new Date();
+  const arr = await RequestModel.find().lean();
+  const reqnum = arr.length + 1;
+  const request = await new RequestModel({ reqnum, datetime, company_name, carrier_name, tel, comment, ati });
+  await request.save();
+  const requests = await RequestModel.find().lean();
+  res.json({ requests });
 })
 
 router.delete("/delete/:_id", async (req, res) => {
   try {
     const { _id } = req.params;
-    await workerModel.findByIdAndDelete(_id);
+    await RequestModel.findByIdAndDelete(_id);
     res.json({ removed: true });
   } catch (error) {
     console.log(error);
