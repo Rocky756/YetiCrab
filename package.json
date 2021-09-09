@@ -1,8 +1,22 @@
 {
   "name": "yeticrab",
   "version": "1.0.0",
+  "description": "YetiCrab Тестовое задание Прототип системы ведения заявок для логистов в авто грузоперевозках в виде web-приложения.  Прототип включает в себя вывод таблицы с заявками, счетчик заявок (количество заявок в таблице).  Есть возможность перейти в режим администратора (без авторизации), где появляется возможность просмотра, редактирования и удаления заявок, создание новых заявок.  В заявке есть следующие данные:  ● Номер заявки  ● Дата и время получения заявки от клиента  ● Название фирмы клиента  ● ФИО перевозчика  ● Контактный телефон перевозчика  ● Комментарии  ● ATI код сети перевозчика (кликабельно, переход на сайт).  Ссылка такого вида: https://ati.su/firms/{ati}/info (пример: https://ati.su/firms/12345/info).  Также реализована сортировка, поиск. Backend на Node Js и Express, frontend на React, база данных MongoDB.",
   "main": "index.js",
-  "repository": "git@github.com:Rocky756/YetiCrab.git",
-  "author": "Ruslan <ruslandegtyrev@gmail.com>",
-  "license": "MIT"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd frontend && npm i && npm run build",
+    "start": "cd backend && npm i && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rocky756/YetiCrab.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rocky756/YetiCrab/issues"
+  },
+  "homepage": "https://github.com/Rocky756/YetiCrab#readme"
 }

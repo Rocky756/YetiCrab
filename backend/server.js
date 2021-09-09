@@ -21,16 +21,16 @@ app.use(express.urlencoded({ extended: true }));
 // Подключаем middleware, которое позволяет читать переменные JavaScript, сохранённые в формате JSON в body HTTP-запроса.
 app.use(express.json());
 
-// const buildHtml = path.resolve(__dirname, "../frontend/build/index.html");
-// const buildStatic = path.resolve(__dirname, "../frontend/build/");
+const buildHtml = path.resolve(__dirname, "../frontend/build/index.html");
+const buildStatic = path.resolve(__dirname, "../frontend/build/");
 
-// app.use(express.static(buildStatic));
+app.use(express.static(buildStatic));
 
 app.use('/tab', requestsRouter)
 
-// app.get("*", (_, res) => {
-//   res.sendFile(buildHtml);
-// });
+app.get("*", (_, res) => {
+  res.sendFile(buildHtml);
+});
 
 
 app.listen(process.env.PORT|| 5000, () => {
